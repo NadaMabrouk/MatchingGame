@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Matching Game</title>
+	<script type="text/javascript">
+		
+		var numberOfFaces = 5;
+			function GenerateFaces() {
+				var leftDiv = document.getElementById("leftSide");
+				var rightDiv = document.getElementById("rightSide");
+				var theBody = document.getElementsByTagName("body")[0];
+				var myImg;
+				var leftPostion, topPosition;
+				for(var i=0;i<numberOfFaces;i++){
+					topPosition = Math.floor(Math.random() * 351);
+				    leftPostion = Math.floor(Math.random() * 401);
+					myImg = document.createElement('img');
+					myImg.src = "http://home.cse.ust.hk/~rossiter/mooc/matching_game/smile.png";
+					myImg.style.position = 'absolute';
+					myImg.style.top = topPosition + "px";
+					myImg.style.left = leftPostion + "px";
+					leftDiv.appendChild(myImg);
+				}
+				var leftSideImages = leftDiv.cloneNode(true);
+				leftSideImages.removeChild(leftSideImages.lastChild);
+				rightSide.appendChild(leftSideImages);
+
+				leftDiv.lastChild.onclick=function nextLevel(event){
+									event.stopPropagation();
+									numberOfFaces+=5;
+									while(leftDiv.firstChild){
+										leftDiv.removeChild(leftDiv.firstChild);
+									}
+									while(rightDiv.firstChild){
+										rightDiv.removeChild(rightDiv.firstChild);
+									}
+									GenerateFaces();
+				};
+				theBody.onclick = function gameOver(){
+					alert("Game Over !!");
+					theBody.onclick = null;
+					leftDiv.lastChild.onclick = null;
+				};
+
+			}
+	</script>
+	<style type="text/css">
+		div{
+			width:500px;
+			height: 450px;
+			position: absolute;
+		}
+
+		#rightSide{
+			left: 550px;
+			border-left: 1px solid black;
+		}
+	</style>
+</head>
+<body onload="GenerateFaces()">
+<h2>Matching Game</h2>
+<h4>Click on the extra smiling face on the Left ..</h4>
+<div id="leftSide">
+</div>
+<div id="rightSide">
+</div>
+
+</body>
+</html>
